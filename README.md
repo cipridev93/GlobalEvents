@@ -1,6 +1,6 @@
 # GlobalEvents
 .NET Core mvc and Microservices app for studying
-topics included:
+- topics included:
  - Synchronous communication between microservices
  - Asynchronous communication between microservices
  - Service Worker
