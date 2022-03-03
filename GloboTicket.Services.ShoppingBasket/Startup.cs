@@ -14,6 +14,7 @@ using System;
 using System.Net.Http;
 using Polly;
 using Polly.Extensions.Http;
+using GloboTicket.Services.ShoppingBasket.Worker;
 
 namespace GloboTicket.Services.ShoppingBasket
 {
@@ -31,6 +32,13 @@ namespace GloboTicket.Services.ShoppingBasket
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddHostedService<ServiceBusListener>();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ShoppingBasketDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddSingleton(new BasketLinesIntegrationRepository(optionsBuilder.Options));
 
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped<IBasketLinesRepository, BasketLinesRepository>();

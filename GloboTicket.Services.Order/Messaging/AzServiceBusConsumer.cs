@@ -32,7 +32,6 @@ namespace GloboTicket.Services.Ordering.Messaging
         {
             _configuration = configuration;
             _orderRepository = orderRepository;
-            // _logger = logger;
             _messageBus = messageBus;
 
             var serviceBusConnectionString = _configuration.GetValue<string>("ServiceBusConnectionString");

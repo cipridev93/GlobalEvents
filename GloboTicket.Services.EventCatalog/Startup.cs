@@ -9,9 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Net.Http;
-using Polly;
-using Polly.Extensions.Http;
+using GloboTicket.Integration.MessagingBus;
 
 namespace GloboTicket.Services.EventCatalog
 {
@@ -33,6 +31,7 @@ namespace GloboTicket.Services.EventCatalog
             services.AddScoped<IEventRepository, EventRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSingleton<IMessageBus, AzServiceBusMessageBus>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
