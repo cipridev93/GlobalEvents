@@ -40,5 +40,10 @@ namespace GloboTicket.Web.Services
             return await response.ReadContentAs<List<Category>>();
         }
 
+        public async Task<PriceUpdate> UpdatePrice(PriceUpdate priceUpdate)
+        {
+            var response = await client.PostAsJson($"api/events/eventpriceupdate", priceUpdate);
+            return await response.ReadContentAs<PriceUpdate>();
+        }
     }
 }
