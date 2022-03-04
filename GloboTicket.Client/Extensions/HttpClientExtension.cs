@@ -26,7 +26,6 @@ namespace GloboTicket.Web.Extensions
             return httpClient.PutAsync(url, content);
         }
 
-
         public static async Task<T> ReadContentAs<T>(this HttpResponseMessage response)
         {
             if (!response.IsSuccessStatusCode)

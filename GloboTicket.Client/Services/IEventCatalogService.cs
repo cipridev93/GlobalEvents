@@ -12,5 +12,6 @@ namespace GloboTicket.Web.Services
         Task<Event> GetEvent(Guid id);
         Task<IEnumerable<Category>> GetCategories();
         Task<PriceUpdate> UpdatePrice(PriceUpdate priceUpdate);
+        Task<CatalogBrowse> GetCatalogBrowse(Guid basketId, Guid categoryId);
     }
 }

@@ -1,5 +1,5 @@
-﻿using GloboTicket.Web.Extensions;
-using GloboTicket.Web.Models.Api;
+﻿using GloboTicket.Web.Models.Api;
+using GloboTicket.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -11,6 +11,10 @@ namespace GloboTicket.Web.Services
     {
         private readonly HttpClient client;
 
+        //Regular calls, replaced the microservice calls but now through the gateway
+
+        #region Regular calls through Gateway
+
         public EventCatalogService(HttpClient client)
         {
             this.client = client;
@@ -18,32 +22,46 @@ namespace GloboTicket.Web.Services
 
         public async Task<IEnumerable<Event>> GetAll()
         {
-            var response = await client.GetAsync("/api/events");
+            var response = await client.GetAsync("/api/bffweb/events");
             return await response.ReadContentAs<List<Event>>();
         }
 
         public async Task<IEnumerable<Event>> GetByCategoryId(Guid categoryid)
         {
-            var response = await client.GetAsync($"/api/events/?categoryId={categoryid}");
+            var response = await client.GetAsync($"/api/bffweb/events/{categoryid}");
             return await response.ReadContentAs<List<Event>>();
         }
 
         public async Task<Event> GetEvent(Guid id)
         {
-            var response = await client.GetAsync($"/api/events/{id}");
+            var response = await client.GetAsync($"/api/bffweb/events/event/{id}");
             return await response.ReadContentAs<Event>();
         }
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            var response = await client.GetAsync("/api/categories");
+            var response = await client.GetAsync("/api/bffweb/events/categories");
             return await response.ReadContentAs<List<Category>>();
+        }
+
+        #endregion
+
+        //Calls optimized for use through the gateway
+
+        #region Gateway calls
+
+        public async Task<CatalogBrowse> GetCatalogBrowse(Guid basketId, Guid categoryId)
+        {
+            var response = await client.GetAsync($"/api/bffweb/events/catalogbrowse/{categoryId}/basket/{basketId}");
+            return await response.ReadContentAs<CatalogBrowse>();
         }
 
         public async Task<PriceUpdate> UpdatePrice(PriceUpdate priceUpdate)
         {
-            var response = await client.PostAsJson($"api/events/eventpriceupdate", priceUpdate);
+            var response = await client.PostAsJson($"api/bffweb/events/eventpriceupdate", priceUpdate);
             return await response.ReadContentAs<PriceUpdate>();
         }
+
+        #endregion
     }
 }

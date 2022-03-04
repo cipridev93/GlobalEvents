@@ -28,7 +28,7 @@ namespace GloboTicket.Web
                 builder.AddRazorRuntimeCompilation();
 
             services.AddHttpClient<IEventCatalogService, EventCatalogService>(c => 
-                c.BaseAddress = new Uri(config["ApiConfigs:EventCatalog:Uri"]));
+                c.BaseAddress = new Uri(config["GatewayUrl"]));
             services.AddHttpClient<IShoppingBasketService, ShoppingBasketService>(c => 
                 c.BaseAddress = new Uri(config["ApiConfigs:ShoppingBasket:Uri"]));
             services.AddHttpClient<IOrderService, OrderService>(c =>
