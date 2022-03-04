@@ -4,3 +4,4 @@
  - Asynchronous communication between microservices
  - Service Worker
  - Azure Service Bus
+ - Communication through a gateway 
